@@ -1,0 +1,20 @@
+.login{
+	text-align: center;
+}
+
+.input{
+	margin-left: 3em;
+}
+
+.header{
+	background-color: gray;
+	text-align: right;
+}
+
+.header span{
+	margin-right: 3em;
+}
+
+.right{
+	text-align: right;
+}

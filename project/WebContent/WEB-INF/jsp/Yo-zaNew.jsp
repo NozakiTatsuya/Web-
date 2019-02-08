@@ -1,0 +1,30 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="NewFile.css">
+	<title>title</title>
+</head>
+	<body>
+	<div class="header">
+		<span >ユーザ名</span>
+		<a  href="/cgi-bin/Logout">ログアウト</a>
+	</div>
+	<h1 class="login">ユーザ新規登録</h1>
+
+	<div class="login">
+
+	ログインID<input class="input" type="text" name="name"><br>
+	パスワード<input class="input" type="password" name="name"><br>
+	パスワード(確認)<input class="input" type="password" name="name"><br>
+	ユーザー名<input class="input" type="text" name="name"><br>
+	生年月日<input class="input" type="text" name="name">
+	<br><br><br>
+	<input type="submit"value="登録">
+	<a onclick="history.back()" href="#">戻る</a>
+	</div>
+	</body>
+</html>
