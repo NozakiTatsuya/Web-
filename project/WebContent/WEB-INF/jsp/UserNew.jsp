@@ -11,11 +11,10 @@
 	<body>
 	<div class="header">
 		<span >ユーザ名</span>
-		<a  href="/cgi-bin/Logout">ログアウト</a>
+		<a  href="LogoutServlet">ログアウト</a>
 	</div>
-	<h1 class="login">ユーザ新規登録</h1>
-
-	<div class="login">
+	<h1>ユーザ新規登録</h1>
+	<form action="UserNewServlet" method="post">
 
 	ログインID<input class="input" type="text" name="name"><br>
 	パスワード<input class="input" type="password" name="name"><br>
@@ -23,8 +22,11 @@
 	ユーザー名<input class="input" type="text" name="name"><br>
 	生年月日<input class="input" type="text" name="name">
 	<br><br><br>
+
+
 	<input type="submit"value="登録">
-	<a onclick="history.back()" href="#">戻る</a>
-	</div>
+
+	</form>
+	<a  href="UserListServlet">戻る</a>
 	</body>
 </html>

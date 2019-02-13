@@ -11,11 +11,10 @@
 <body>
 	<div class="header">
 		<span >ユーザ名</span>
-		<a  href="/cgi-bin/Logout">ログアウト</a>
+		<a  href="LogoutServlet">ログアウト</a>
 	</div>
 	<body>
 	<h1 class="login">ユーザ情報参照</h1>
-
 	<div class="login">
 	ログインID id0001<br>
 	ユーザー名 田中太郎<br>
@@ -23,9 +22,10 @@
 	登録日 2017年01月01日 10:50<br>
 	更新日 2017年02月01日 01:05<br>
 	<br>
-	<input type="submit"value="登録">
-	<a onclick="history.back()" href="#">戻る</a>
 
 	</div>
+
+	<a onclick="history.back()" href="UserListServlet">戻る</a>
+
 	</body>
 </html>

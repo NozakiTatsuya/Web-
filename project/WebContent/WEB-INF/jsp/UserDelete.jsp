@@ -11,17 +11,18 @@
 </head>
 <body>
 	<div class="header">
+		<span>ユーザ名</span> <a href="LogoutServlet">ログアウト</a>
 	</div>
 <body>
-	<h1 class="login">ログイン画面</h1>
-	<form action="loginServlet" method="post">
-		<div class="login">
-			ログインID<input class="input" type="text" name="loginid"><br>
-			パスワード<input class="input" type="password" name="password"> <br>
+	<h1>ユーザ削除確認</h1>
 
-			<input type="submit" value="ログイン">
 
-		</div>
+	<form action="UserDeleteServlet" method="post">
+		ログインID:id0001を本当に削除してよろしいですか <br>
+		<a href="UserListServlet">キャンセル</a>
+
+		<a ></a>
 	</form>
+
 </body>
 </html>

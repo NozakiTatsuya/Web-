@@ -10,12 +10,12 @@
 </head>
 <body>
 	<div class="header">
-		<span>ユーザ名</span> <a href="/cgi-bin/Logout">ログアウト</a>
+		<span>ユーザ名</span> <a href="LogoutServlet">ログアウト</a>
 	</div>
 <body>
 	<h1 class="login">ユーザ一覧</h1>
 	<div class="right">
-		<a onclick="history.back()" href="#">新規登録</a><br>
+		<a onclick="history.back()" href="UserNewServlet">新規登録</a><br>
 	</div>
 	<div class="login">
 		ログインID <input class="input" type="password" name="name"><br>
@@ -27,7 +27,7 @@
 	</div>
 	<br>
 	<div class="right">
-		<button onclick="history.back()">検索</button>
+		<a href="#">検索</a>
 	</div>
 	<br>
 	<br>
@@ -47,31 +47,10 @@
 				<td>田中太郎</td>
 				<td>1989年04月26日</td>
 				<td>
-					<button onclick="history.back()">詳細</button>
-					<button onclick="history.back()">更新</button>
-					<button onclick="history.back()">消去</button>
-				</td>
-			</tr>
-			<tr>
-				<td>id0002</td>
-				<td>佐藤二朗</td>
-				<td>2001年11月12日</td>
-				<td>
-					<button onclick="history.back()">詳細</button>
-					<button onclick="history.back()">更新</button>
-					<button onclick="history.back()">消去</button>
-				</td>
-			</tr>
-			<tr>
-				<td>id0003</td>
-				<td>佐川真司</td>
-				<td>2000年01月01日</td>
-				<td>
-					<button onclick="history.back()">詳細</button>
-					<button onclick="history.back()">更新</button>
-					<button onclick="history.back()">消去</button>
-				</td>
-			</tr>
+					<a href="UserDetalistServlet">詳細</a>
+					<a href="UserInformationServlet">更新</a>
+					<a href="UserDeleteServlet" >消去</a>
+				</td >
 		</tbody>
 
 	</table>
