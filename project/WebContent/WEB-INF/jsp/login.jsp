@@ -6,17 +6,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="NewFile.css">
 <title>title</title>
 </head>
+
 <body>
-	<div class="header">
-	</div>
-<body>
+	<c:if test="${errMsg != null}" >
+	  ${errMsg}
+	</c:if>
 	<h1 class="login">ログイン画面</h1>
 	<form action="loginServlet" method="post">
 		<div class="login">
-			ログインID<input class="input" type="text" name="loginid"><br>
+			ログインID<input class="input" type="text" name="loginId"><br>
 			パスワード<input class="input" type="password" name="password"> <br>
 
 			<input type="submit" value="ログイン">

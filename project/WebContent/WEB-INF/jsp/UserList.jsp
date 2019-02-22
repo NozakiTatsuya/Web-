@@ -2,58 +2,121 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="NewFile.css">
-<title>title</title>
-</head>
-<body>
-	<div class="header">
-		<span>ユーザ名</span> <a href="LogoutServlet">ログアウト</a>
-	</div>
-<body>
-	<h1 class="login">ユーザ一覧</h1>
-	<div class="right">
-		<a onclick="history.back()" href="UserNewServlet">新規登録</a><br>
-	</div>
-	<div class="login">
-		ログインID <input class="input" type="password" name="name"><br>
-		ユーザ名 <input class="input" type="text" name="name"><br>
-		生年月日 <input type="date" id="start" name="trip-start" min="2019-01-01"
-			max="2019-12-31"> <span>〜 <input type="date"
-			id="start" name="trip-start" min="2019-01-01" max="2019-12-31">
-		</span>
-	</div>
-	<br>
-	<div class="right">
-		<a href="#">検索</a>
-	</div>
-	<br>
-	<br>
-	<table border="1">
-		<thead>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ユーザ一覧画面</title>
+    <!-- BootstrapのCSS読み込み -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- オリジナルCSS読み込み -->
+    <link href="css/original/common.css" rel="stylesheet">
+    <!-- Jqeryの読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <!-- BootstrapのJS読み込み -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- レイアウトカスタマイズ用個別CSS -->
 
-			<tr>
-				<th>ログインID</th>
-				<th>ユーザ名</th>
-				<th>生年月日</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>id0001</td>
-				<td>田中太郎</td>
-				<td>1989年04月26日</td>
-				<td>
-					<a href="UserDetalistServlet">詳細</a>
+  </head>
+  <body>
+
+    <!-- header -->
+    <header>
+      <nav class="navbar navbar-inverse">
+      	<div class="container">
+      		<div class="navbar-header">
+            <a class="navbar-brand" href="userCreate.html">ユーザ管理システム</a>
+      		</div>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li class="navbar-text">${userInfo.name} さん </li>
+  			<li class="dropdown">
+  			  <a href="LogoutServlet" class="navbar-link logout-link">ログアウト</a>
+            </li>
+  		  </ul>
+      	</div>
+      </nav>
+    </header>
+    <!-- /header -->
+
+    <!-- body -->
+    <div class="container">
+
+      <div class="text-right">
+        <a href="UserNewServlet">新規登録</a>
+      </div>
+
+
+      <div class="panel-body">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">検索条件</div>
+            </div>
+            <div class="panel-body">
+              <form method="post" action="#" class="form-horizontal">
+                <div class="form-group">
+                  <label for="code" class="control-label col-sm-2">ログインID</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="login-id" id="login-id" class="form-control"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="name" class="control-label col-sm-2">ユーザ名</label>
+                  <div class="col-sm-6">
+                    <input type="text" name="user-name" id="user-name" class="form-control"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="continent" class="control-label col-sm-2">生年月日</label>
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <input type="date" name="date-start" id="date-start" class="form-control" size="30"/>
+                    </div>
+                    <div class="col-xs-1 text-center">
+                      ~
+                    </div>
+                    <div class="col-sm-2">
+                      <input type="date" name="date-end" id="date-end" class="form-control"/>
+                    </div>
+                </div>
+                </div>
+                <div class="text-right">
+                  <button type="submit" value="検索" class="btn btn-primary form-submit">検索</button>
+                </div>
+              </form>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+             <table class="table table-striped">
+               <thead>
+                 <tr>
+                   <th>ログインID</th>
+                   <th>ユーザ名</th>
+                   <th>生年月日</th>
+                   <th></th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <c:forEach var="user" items="${userList}" >
+                   <tr>
+                     <td>${user.loginId}</td>
+                     <td>${user.name}</td>
+                     <td>${user.birthDate}</td>
+                     <!-- TODO 未実装；ログインボタンの表示制御を行う -->
+                     <td>
+                      <a href="UserDetalistServlet">詳細</a>
 					<a href="UserInformationServlet">更新</a>
 					<a href="UserDeleteServlet" >消去</a>
-				</td >
-		</tbody>
+                     </td>
+                   </tr>
+                 </c:forEach>
+               </tbody>
+             </table>
+           </div>
+         </div>
+      </div>
 
-	</table>
 
-</body>
+  </body>
 </html>

@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.UserDao;
+import model.User;
+
 /**
  * Servlet implementation class UserNewServlet
  */
@@ -37,8 +40,48 @@ public class UserNewServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+		request.setCharacterEncoding("UTF-8");
+		String loginId = request.getParameter("loginId");
+		String password = request.getParameter("password");
+		String password1=request.getParameter("password1");
+		String username=request.getParameter("username");
+		String birthday=request.getParameter("birthday");
+
+		UserDao userDao = new UserDao();
+		User user = userDao.findByLoginInfo(loginId,password);
+		if (user != null) {
+
+			request.setAttribute("errMsg", "入力された内容が正しくありません。");
+
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/UserNew.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
+		if(!password.equals(password1)) {
+
+			request.setAttribute("errMsg", "入力された内容が正しくありません。");
+
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/UserNew.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
+		if(loginId.length()==0||password.length()==0||password1.length()==0||username.length()==0||birthday.length()==0) {
+
+			request.setAttribute("errMsg", "入力された内容が正しくありません。");
+
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/UserNew.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
+
+		userDao.UserNewInfo(loginId,password,username,birthday);
 		response.sendRedirect("UserListServlet");
-	}
+
 
 }
+}
+
