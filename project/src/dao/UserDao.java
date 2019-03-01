@@ -24,7 +24,7 @@ public class UserDao {
 	 * @param password
 	 * @return
 	 */
-	public User findByLoginInfo(String loginId,String password) {
+	public User findByLoginInfo(String loginId, String password) {
 		Connection conn = null;
 		try {
 			// データベースへ接続
@@ -64,7 +64,6 @@ public class UserDao {
 		}
 	}
 
-
 	/**
 	 * 全てのユーザ情報を取得する
 	 * @return
@@ -79,7 +78,7 @@ public class UserDao {
 
 			// SELECT文を準備
 			// TODO: 未実装：管理者以外を取得するようSQLを変更する
-			String sql = "SELECT * FROM user";
+			String sql = "SELECT * FROM user WHERE id!=1";
 
 			// SELECTを実行し、結果表を取得
 			Statement stmt = conn.createStatement();
@@ -116,7 +115,8 @@ public class UserDao {
 		return userList;
 
 	}
-	public  void UserNewInfo(String loginId,String password,String username ,String birthday){
+
+	public void UserNewInfo(String loginId, String password, String username, String birthday) {
 		Connection conn = null;
 		try {
 			// データベースへ接続
@@ -131,7 +131,7 @@ public class UserDao {
 			pStmt.setString(2, username);
 			pStmt.setString(3, birthday);
 			pStmt.setString(4, password);
-			int result=pStmt.executeUpdate();
+			pStmt.executeUpdate();
 			pStmt.close();
 
 		} catch (SQLException e) {
@@ -147,11 +147,51 @@ public class UserDao {
 			}
 		}
 
-
-
-
 	}
-	public  void DeleteInfo(String id) {
+
+
+
+	public User UserDetalist(String id) {
+
+		Connection conn = null;
+		try {
+
+			// データベースへ接続
+			conn = DBManager.getConnection();
+			String sql= "SELECT * FROM user where login_id = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, id);
+			ResultSet rs = pStmt.executeQuery();
+
+			//1回だけという公式
+			if(!rs.next()) {
+				return null;}
+			//
+			int id1 = rs.getInt("id");
+			String loginId = rs.getString("login_id");
+			String name = rs.getString("name");
+			Date birthDate = rs.getDate("birth_date");
+			String password = rs.getString("password");
+			String createDate = rs.getString("create_date");
+			String updateDate = rs.getString("update_date");
+			return new User(id1, loginId, name, birthDate, password, createDate, updateDate);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+	}
+
+	public void UserInformationInfo(String name,String password,String birth_date,String id){
 
 		Connection conn = null;
 		try {
@@ -159,31 +199,89 @@ public class UserDao {
 			// データベースへ接続
 			conn = DBManager.getConnection();
 
-			String sql= "DELETE FROM user WHERE id = ? ";
-			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setString(1, id);
-			int result=pStmt.executeUpdate();
-			pStmt.close();
+			if(!password.equals("")) {
+				String sql= "UPDATE user SET name = ?,birth_date = ?,password = ?,update_date = now() where login_id=?;";
 
-		}catch (Exception e) {
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+				pStmt.setString(1, name);
+				pStmt.setString(2, birth_date);
+				pStmt.setString(3, password);
+				pStmt.setString(4, id);
+				pStmt.executeUpdate();
+			}
+			else{
+				String sql= "UPDATE user SET name = ?,birth_date = ?,update_date = now() where login_id=?;";
+
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+				pStmt.setString(1, name);
+				pStmt.setString(2, birth_date);
+				pStmt.setString(3, id);
+				pStmt.executeUpdate();
+			}
+
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
+			return ;
+		} finally {
 
 
-		}finally {// データベース切断
+
+			// データベース切断
 			if (conn != null) {
 				try {
 					conn.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
-
+					return;
 				}
-
-
-
 			}
-
 		}
 	}
-	public  void UserDetalistInfo() {
+	public void DeleteInfo(String loginId) {
 
-}
+		Connection conn = null;
+		try {
+
+			// データベースへ接続
+			conn = DBManager.getConnection();
+
+
+			String sql = "DELETE FROM user WHERE login_id IN (?)";
+
+			// SELECTを実行し、結果表を取得
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			pStmt.setString(1, loginId);
+
+			pStmt.executeUpdate();
+			pStmt.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {// データベース切断
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+			}
+		}
+	}
+
+
+	public void kennsaku(String loginId, String password, String username, String birthday){
+
+		try {
+
+
+
+		}catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			}
+		}}

@@ -7,6 +7,7 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="NewFile.css">
 	<title>title</title>
+
 </head>
 <body>
 	<div class="header">
@@ -16,11 +17,11 @@
 	<body>
 	<h1 class="login">ユーザ情報参照</h1>
 	<div class="login">
-	ログインID id0001<br>
-	ユーザー名 田中太郎<br>
-	生年月日 1989年04月26日<br>
-	登録日 2017年01月01日 10:50<br>
-	更新日 2017年02月01日 01:05<br>
+	ログインID ${user.loginId}<br>
+	ユーザー名 ${user.name}<br>
+	生年月日${user.birthDate}<br>
+	登録日 ${user.createDate}<br>
+	更新日 ${user.updateDate}<br>
 	<br>
 
 	</div>

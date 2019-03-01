@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.UserDao;
+import model.User;
 
 /**
  * Servlet implementation class UserDeleteServlet
@@ -31,16 +32,30 @@ public class UserDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
+		String loginId=request.getParameter("id");
+		UserDao userdao = new UserDao();
+		User UserList=userdao.UserDetalist(loginId);
+
+		request.setAttribute("user", UserList);
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/UserDelete.jsp");
 		dispatcher.forward(request, response);
+
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
+		request.setCharacterEncoding("UTF-8");
+
+		String Id = request.getParameter("Id");
+
+
 		UserDao userDao = new UserDao();
 
-		userDao.id=
+		userDao.DeleteInfo(Id);
 		response.sendRedirect("UserListServlet");
 	}
 

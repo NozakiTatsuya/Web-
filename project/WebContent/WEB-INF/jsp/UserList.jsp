@@ -105,9 +105,15 @@
                      <td>${user.birthDate}</td>
                      <!-- TODO 未実装；ログインボタンの表示制御を行う -->
                      <td>
-                      <a href="UserDetalistServlet">詳細</a>
-					<a href="UserInformationServlet">更新</a>
-					<a href="UserDeleteServlet" >消去</a>
+                      <a href="UserDetalistServlet?id=${user.loginId}">詳細</a>
+
+                    <c:if test="${userInfo.loginId=='admin'||userInfo.loginId==user.loginId}">
+
+
+					<a href="UserInformationServlet?id=${user.loginId}">更新</a>
+					<a href="UserDeleteServlet?id=${user.loginId}" >消去</a>
+                    </c:if>
+
                      </td>
                    </tr>
                  </c:forEach>

@@ -47,12 +47,13 @@ public class loginServlet extends HttpServlet {
 		String loginId = request.getParameter("loginId");
 		String password = request.getParameter("password");
 
-		
+
 		UserDao userDao = new UserDao();
 		User user = userDao.findByLoginInfo(loginId, password);
 		if (user == null) {
 
-			request.setAttribute("errMsg", "ログインに失敗しました。");
+			request.setAttribute("errMsg", "ログインIDまたはパスワードが異なります。");
+
 
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");

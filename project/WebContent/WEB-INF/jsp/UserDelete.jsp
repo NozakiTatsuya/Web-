@@ -18,9 +18,9 @@
 
 
 	<form action="UserDeleteServlet" method="post">
-		ログインID:id0001を本当に削除してよろしいですか <br>
-
-		<input type="submit"value="OK">
+		ログインID:${user.loginId}を本当に削除してよろしいですか <br>
+	<input type="hidden" name="Id" value="${user.loginId}">
+		<input type="submit" value="OK">
 
 		<a href="UserListServlet">キャンセル</a>
 

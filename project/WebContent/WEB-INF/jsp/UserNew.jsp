@@ -17,7 +17,7 @@
 	<h1>ユーザ新規登録</h1>
 
 	<c:if test="${errMsg != null}" >
-		 <span style="color: #F00;">${errMsg}</span>
+	 <font color="red">${errMsg} </font><br>
 	</c:if>
 	<form action="UserNewServlet" method="post">
 

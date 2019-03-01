@@ -15,17 +15,21 @@
 	</div>
 <body>
 	<h1>ユーザ情報更新</h1>
+	 <font color="red">${errMsg} </font><br>
 
 	<form action="UserInformationServlet" method="post">
 
-		ログインID id0001<br> パスワード<input class="input" type="password"
-			name="name"><br> パスワード（確認）<input class="input"
-			type="password" name="name"><br> ユーザ名<input
-			class="input" type="text" name="name"><br> 生年月日<input
-			class="input" type="text" name="name"> <br>
-			<input type="submit" value="更新">
+		ID<input type="hidden" name="Id" value="${user.loginId}">${user.loginId}${loginId}<br>
+		パスワード<input class="input"type="password" name="password" > <br>
+		パスワード（確認） <input class="input" type="password" name="password1"> <br>
+		ユーザ名<input class="input" type="text" name="name" value="${user.name}${name}"> <br>
+		生年月日<input class="input" type="date" name="birth_date" value="${user.birthDate}${birth_date}"> <br>
+
+
+		<input type="submit" value="更新">
 
 	</form>
+
 	<a href="UserListServlet">戻る</a>
 
 

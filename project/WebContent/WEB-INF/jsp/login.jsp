@@ -10,10 +10,12 @@
 </head>
 
 <body>
-	<c:if test="${errMsg != null}" >
-	  ${errMsg}
-	</c:if>
+
 	<h1 class="login">ログイン画面</h1>
+
+	<c:if test="${errMsg != null}" >
+	 <font color="red">${errMsg} </font><br>
+	</c:if>
 	<form action="loginServlet" method="post">
 		<div class="login">
 			ログインID<input class="input" type="text" name="loginId"><br>
