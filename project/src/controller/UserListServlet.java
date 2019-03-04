@@ -62,12 +62,16 @@ public class UserListServlet extends HttpServlet {
 		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			request.setCharacterEncoding("UTF-8");
 
-			String loginId = request.getParameter("loginId");
-			String password = request.getParameter("password");
-			String password1=request.getParameter("password1");
-			String username=request.getParameter("username");
-			String birthday=request.getParameter("birthday");
-			response.sendRedirect("UserNewServlet");
+			String loginId=request.getParameter("login-id");
+			String name=request.getParameter("user-name");
+			String birth_day=request.getParameter("date-start");
+			String birth_day1=request.getParameter("date-end");
+			UserDao userDao = new UserDao();
+
+			List<User> userList = userDao.UserListInfo(loginId,name,birth_day,birth_day1);
+			request.setAttribute("userList", userList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/UserList.jsp");
+			dispatcher.forward(request, response);
 		}
 
 	}

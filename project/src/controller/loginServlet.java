@@ -65,8 +65,7 @@ public class loginServlet extends HttpServlet {
 
 
 		response.sendRedirect("UserListServlet");
-
-
+		
 
 	}
 }

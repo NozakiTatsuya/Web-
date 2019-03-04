@@ -1,5 +1,9 @@
 package dao;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +12,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.bind.DatatypeConverter;
 
 import model.User;
 
@@ -26,6 +32,8 @@ public class UserDao {
 	 */
 	public User findByLoginInfo(String loginId, String password) {
 		Connection conn = null;
+
+
 		try {
 			// データベースへ接続
 			conn = DBManager.getConnection();
@@ -33,10 +41,11 @@ public class UserDao {
 			// SELECT文を準備
 			String sql = "SELECT * FROM user WHERE login_id = ? and password = ?";
 
+			String loginpassword= cood(password);
 			// SELECTを実行し、結果表を取得
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, loginId);
-			pStmt.setString(2, password);
+			pStmt.setString(2, loginpassword);
 			ResultSet rs = pStmt.executeQuery();
 
 			// 主キーに紐づくレコードは1件のみなので、rs.next()は1回だけ行う
@@ -78,7 +87,7 @@ public class UserDao {
 
 			// SELECT文を準備
 			// TODO: 未実装：管理者以外を取得するようSQLを変更する
-			String sql = "SELECT * FROM user WHERE id!=1";
+			String sql = "SELECT * FROM user where id!=1";
 
 			// SELECTを実行し、結果表を取得
 			Statement stmt = conn.createStatement();
@@ -125,12 +134,13 @@ public class UserDao {
 			// SELECT文を準備
 			String sql = "insert into user (login_id,name,birth_date,password,create_date,update_date) values(?,?,?,?,now(),now())";
 
+			String Newpassword= cood(password);
 			// SELECTを実行し、結果表を取得
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, loginId);
 			pStmt.setString(2, username);
 			pStmt.setString(3, birthday);
-			pStmt.setString(4, password);
+			pStmt.setString(4, Newpassword);
 			pStmt.executeUpdate();
 			pStmt.close();
 
@@ -201,11 +211,12 @@ public class UserDao {
 
 			if(!password.equals("")) {
 				String sql= "UPDATE user SET name = ?,birth_date = ?,password = ?,update_date = now() where login_id=?;";
+				String Infomationpassword= cood(password);
 
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 				pStmt.setString(1, name);
 				pStmt.setString(2, birth_date);
-				pStmt.setString(3, password);
+				pStmt.setString(3, Infomationpassword);
 				pStmt.setString(4, id);
 				pStmt.executeUpdate();
 			}
@@ -273,15 +284,87 @@ public class UserDao {
 	}
 
 
-	public void kennsaku(String loginId, String password, String username, String birthday){
+	public List<User> UserListInfo(String loginId, String username, String birth_date,String birth_date1){
+
+		Connection conn = null;
+		List<User> userList = new ArrayList<User>();
 
 		try {
+			// データベースへ接続
+			conn = DBManager.getConnection();
 
+			// TODO: 未実装：管理者以外を取得するようSQLを変更する
+			String sql = "SELECT * FROM user WHERE id!=1";
+
+			if(!loginId.equals("")){
+				sql += " AND login_id = '" + loginId + "'";
+			}
+
+			if(!username.equals("")){
+				sql += " AND name LIKE '%" + username + "%'";
+			}
+			if(!birth_date.equals("")){
+				sql += " AND birth_date >= '" + birth_date + "'";
+			}
+			if(!birth_date1.equals("")){
+				sql += " AND birth_date <='" + birth_date1 + "'";
+			}
+
+			// SELECTを実行し、結果表を取得
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String login_id= rs.getString("login_id");
+				String name = rs.getString("name");
+				Date birthDate = rs.getDate("birth_date");
+				String password1 = rs.getString("password");
+				String createDate = rs.getString("create_date");
+				String updateDate = rs.getString("update_date");
+				User user = new User(id, login_id, name, birthDate, password1, createDate, updateDate);
+
+				userList.add(user);
+			}
 
 
 		}catch (Exception e) {
 			e.printStackTrace();
-
+			return null;
 		} finally {
+			// データベース切断
+			if (conn != null) {
 			}
-		}}
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return userList;
+	}
+
+
+	public String cood(String password){
+
+
+
+
+	//ハッシュを生成したい元の文字列
+	String source = password;
+	//ハッシュ生成前にバイト配列に置き換える際のCharset
+	Charset charset = StandardCharsets.UTF_8;
+	//ハッシュアルゴリズム
+	String algorithm = "MD5";
+
+	//ハッシュ生成処理
+	byte[] bytes=null;
+	try {
+	bytes = MessageDigest.getInstance(algorithm).digest(source.getBytes(charset));
+	}catch(NoSuchAlgorithmException e) {
+		e.printStackTrace();
+	}
+	String result = DatatypeConverter.printHexBinary(bytes);
+	return result;
+	}
+}
